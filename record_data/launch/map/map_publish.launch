@@ -1,0 +1,6 @@
+<launch>
+  
+   <node name="map_server" pkg="map_server" type="map_server" args="$(find yjh_bot)/maps/bj_cq_1_cut.yaml" >
+  </node>
+
+</launch>

@@ -1,0 +1,26 @@
+local_costmap:
+    footprint: [[-0.245, -0.284], [-0.245, 0.215], [0.245, 0.215], [0.245, -0.284]]
+    footprint_padding: 0.1
+    transform_tolerance: 1.0
+    update_frequency: 10.0
+    publish_frequency: 2.0
+
+    global_frame: /odom
+    robot_base_frame: /base_link
+    resolution: 0.02
+    static_map: false
+    rolling_window: true
+    width: 2
+    height: 2
+
+    plugins:            
+        - {name: sensor,    type: "costmap_2d::ObstacleLayer"}
+        - {name: inflation, type: "costmap_2d::InflationLayer"}
+    sensor:
+        observation_sources: laser_scan_sensor point_cloud
+        laser_scan_sensor: {sensor_frame: laser_link, data_type: LaserScan, topic: scan, marking: true, clearing: true, expected_update_rate: 0.2}
+        point_cloud: {data_type: PointCloud2, topic: /depth_points, marking: true, clearing: true, max_obstacle_height: 1.4, min_obstacle_height: 0.3}
+
+    inflation:
+        inflation_radius: 1.5
+        cost_scaling_factor: 10.0

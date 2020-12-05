@@ -1,0 +1,13 @@
+<launch>
+
+    <node pkg = "record_data" type="read_laser_node" name="read_laser_node" clear_params="true">
+      <param name="scan_read" value="false" />
+      <param name="filter_cloud_read" value="false" />
+      <param name="clustered_cloud_read" value="true" />
+      <param name="high_score_clustered_cloud_read" value="true" />
+      <remap from="filter_cloud" to="filtered_scan" />
+      <remap from="clustered_cloud" to="clustered_particlecloud" />
+      <param name="range_max" value="100."/>
+    </node>
+
+</launch>

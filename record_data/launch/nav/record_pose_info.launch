@@ -1,0 +1,18 @@
+<launch>
+
+  <!-- EDIT THIS LINE TO REFLECT THE NAME OF YOUR OWN MAP FILE 
+       Can also be overridden on the command line -->
+
+  <!-- Run the map server with the desired map -->
+
+  <!-- Start the move_base node with the nav_test parameters -->
+  <node pkg="record_data" type="auto_record_cov_belief_node"  name="auto_record_cov_belief_node" respawn="false" output="screen" clear_params="true">
+       <remap from="ub482/bp_fix" to="ub482/fix" />
+       <param name="fp_amcl" value="/home/lyb/data/cov/amcl_pose_cov_a_3" />
+       <param name="fp_gps" value="/home/lyb/data/cov/gps_cov_a_3" />
+       <param name="fp_odomF" value="/home/lyb/data/cov/odom_filtered_a_3" />
+       <param name="fp_odomG" value="/home/lyb/data/cov/odom_gps_a_3" />
+  </node>
+  
+
+</launch>

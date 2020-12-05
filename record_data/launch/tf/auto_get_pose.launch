@@ -1,0 +1,10 @@
+<launch>
+
+
+  <node name="auto_get_goal_node" pkg="record_data" type="auto_get_goal_node" output="screen">
+    <param name="file_path" value="/home/robot/amcl_pose.txt" />
+    <remap from="amcl_pose" to="pose"/>
+  </node>
+
+
+</launch>
