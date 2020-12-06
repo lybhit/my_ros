@@ -1,0 +1,17 @@
+<launch>
+
+  <!-- EDIT THIS LINE TO REFLECT THE NAME OF YOUR OWN MAP FILE 
+       Can also be overridden on the command line -->
+
+  <!-- Run the map server with the desired map -->
+
+  <!-- Start the move_base node with the nav_test parameters -->
+  <node pkg="record_data" type="visual_marker_node" respawn="false" name="visual_marker_node" output="screen" clear_params="true">
+       <param name="scale" value="0.8" />
+       <param name="red_val" value="1.0" />
+       <param name="green_val" value="1.0" />
+       <param name="blue_val" value="1.0" />
+  </node>
+  
+
+</launch>

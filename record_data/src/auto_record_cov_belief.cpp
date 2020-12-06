@@ -156,7 +156,7 @@ void RecordPoseInfo::poseCb(const geometry_msgs::PoseWithCovarianceStampedConstP
 
   // if(flag_read_1_)
   // {
-      out_file_1_ <<  iso_time_str << ' '<<pos->pose.pose.position.x << ' ' <<pos->pose.pose.position.x << ' ' << yaw<< ' '<<belief << ' ' << cov_x << ' ' << cov_y << ' '<< cov_theta << '\n';
+      out_file_1_ <<  iso_time_str << ' '<<pos->pose.pose.position.x << ' ' <<pos->pose.pose.position.y << ' ' << yaw<< ' '<<belief << ' ' << cov_x << ' ' << cov_y << ' '<< cov_theta << '\n';
   // }
   
 

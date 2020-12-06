@@ -121,6 +121,9 @@ target_link_libraries(pub_pos_from_txt_node
                       ${catkin_LIBRARIES}
 )
 
+add_executable(visual_marker_node src/visual_marker.cpp)
+target_link_libraries(visual_marker_node ${catkin_LIBRARIES})
+
 #############
 ## Install ##
 #############
@@ -137,12 +140,14 @@ target_link_libraries(pub_pos_from_txt_node
  )
   
  install(TARGETS odom_tf_node 
-                                    tf_listen_node 
-                                    auto_get_goal_node 
-                                    #read_laser_node 
-                                   # scan_test_node 
-                                    scan_data_analyze_node
-                                    auto_record_cov_belief_node
+                 tf_listen_node 
+                 auto_get_goal_node 
+                 #read_laser_node 
+                 # scan_test_node 
+                 scan_data_analyze_node
+                 auto_record_cov_belief_node
+                 pub_pos_from_txt_node
+                 visual_marker_node
    RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
  )
 

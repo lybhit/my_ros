@@ -5,6 +5,7 @@
 
   <!-- Start the move_base node with the nav_test parameters -->
   <node pkg="record_data" type="pub_pos_from_txt_node" name="pub_pos_from_txt_node" respawn="false" output="screen" clear_params="true">
+     <remap from="nav_info" to="pose" />
      <param name="file_2_read" value="/home/syy001/liyongbing_ws/src/test_data/my_nodes.txt" />
   </node>
   
