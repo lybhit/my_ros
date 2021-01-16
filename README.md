@@ -7,3 +7,5 @@ catkin_make -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/opt/ros/kinetic i
 it is for test.
 
 it is for test 2.
+
+git add tag.
