@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.8.3)
-project(record_data)
+project(tf_tutorial)
 
 ## Compile as C++11, supported in ROS Kinetic and newer
 add_compile_options(-std=c++11)
@@ -11,7 +11,6 @@ find_package(catkin REQUIRED COMPONENTS
   dynamic_reconfigure
   geometry_msgs
   message_runtime
-  #nav_core
   nav_msgs
   sensor_msgs
   pcl_ros
@@ -40,11 +39,6 @@ endif()
 
 ## System dependencies are found with CMake's conventions
 find_package(Boost REQUIRED)
-find_package(PCL REQUIRED)
-
-add_library(read_txt 
-            src/read_txt.cpp
-)
 
 
 ## Uncomment this if the package has a setup.py. This macro ensures
@@ -89,75 +83,32 @@ catkin_package(
 ## Your package locations should be listed before other locations
 include_directories(
   include
-  convert
-  ${PCL_INCLUDE_DIRS}
   ${catkin_INCLUDE_DIRS}
   ${EIGEN3_INCLUDE_DIRS}
   ${Boost_INCLUDE_DIRS}
 )
 
-add_library(rs_to_velodyne convert/rs_to_velodyne.cpp)
-target_link_libraries(rs_to_velodyne ${PCL_LIBRARIES})
+add_executable(tf_2_eigen src/tf_2_eigen.cpp)
+target_link_libraries(tf_2_eigen ${catkin_LIBRARIES})
 
-add_executable(odom_tf_node src/odom_tf_node.cpp)
-target_link_libraries(odom_tf_node ${catkin_LIBRARIES})
-
-add_executable(tf_listen_node src/tf_listen_node.cpp)
-target_link_libraries(tf_listen_node ${catkin_LIBRARIES})
-
-add_executable(auto_get_goal_node src/auto_get_goal.cpp)
-target_link_libraries(auto_get_goal_node ${catkin_LIBRARIES})
-
-#add_executable(read_laser_node src/read_laser_node.cpp)
-#target_link_libraries(read_laser_node ${catkin_std_msgs})
-#target_link_libraries(scan_test_node ${catkin_LIBRARIES})
-
-add_executable(scan_data_analyze_node src/scan_data_analyze.cpp)
-target_link_libraries(scan_data_analyze_node ${catkin_LIBRARIES})
-
-add_executable(read_pose_cov_node src/read_pose_cov.cpp)
-target_link_libraries(read_pose_cov_node ${catkin_LIBRARIES})
-
-add_executable(auto_record_cov_belief_node src/auto_record_cov_belief.cpp)
-target_link_libraries(auto_record_cov_belief_node ${catkin_LIBRARIES})
-
-# add_executable(pub_pos_from_txt_node src/pub_pos_from_txt.cpp)
-# target_link_libraries(pub_pos_from_txt_node 
-#                       read_txt
-#                       ${catkin_LIBRARIES}
-# )
-
-add_executable(visual_marker_node src/visual_marker.cpp)
-target_link_libraries(visual_marker_node ${catkin_LIBRARIES})
-
-add_executable(bag_record src/get_msg_from_bag.cpp)
-target_link_libraries(bag_record rs_to_velodyne ${catkin_LIBRARIES})
 #############
 ## Install ##
 #############
- install(PROGRAMS
-   scripts/T_test_with_id_simplify.py
-   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
- )
+# install(PROGRAMS
+#   scripts/T_test_with_id_simplify.py
+#   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+# )
 
- install(TARGETS 
-    read_txt rs_to_velodyne
-    ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
-    LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
-    RUNTIME DESTINATION ${CATKIN_GLOBAL_BIN_DESTINATION}
- )
+# install(TARGETS 
+	 # read_txt
+    # ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+    # LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+    # RUNTIME DESTINATION ${CATKIN_GLOBAL_BIN_DESTINATION}
+    # )
   
- install(TARGETS odom_tf_node 
-                 tf_listen_node 
-                 auto_get_goal_node 
-                 #read_laser_node 
-                 # scan_test_node 
-                 scan_data_analyze_node
-                 auto_record_cov_belief_node
-                #  pub_pos_from_txt_node
-                 visual_marker_node
-   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
- )
+# install(TARGETS odom_tf_node 
+#   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+# )
 
 
 
