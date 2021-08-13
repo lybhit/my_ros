@@ -6,8 +6,7 @@
 #include <rosbag/view.h>
 #include <boost/foreach.hpp>
 
-#include "rs_to_velodyne.h"
-#include "rs_to_velodyne.cpp"
+#include "rs_to_velodyne.hpp"
 
 
 void runFromBag(const std::string &in_bag_fn, const std::string &out_bag_fn)

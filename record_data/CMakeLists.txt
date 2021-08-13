@@ -96,8 +96,8 @@ include_directories(
   ${Boost_INCLUDE_DIRS}
 )
 
-add_library(rs_to_velodyne convert/rs_to_velodyne.cpp)
-target_link_libraries(rs_to_velodyne ${PCL_LIBRARIES})
+# add_library(rs_to_velodyne convert/rs_to_velodyne.cpp)
+# target_link_libraries(rs_to_velodyne ${PCL_LIBRARIES})
 
 add_executable(odom_tf_node src/odom_tf_node.cpp)
 target_link_libraries(odom_tf_node ${catkin_LIBRARIES})
@@ -131,7 +131,7 @@ add_executable(visual_marker_node src/visual_marker.cpp)
 target_link_libraries(visual_marker_node ${catkin_LIBRARIES})
 
 add_executable(bag_record src/get_msg_from_bag.cpp)
-target_link_libraries(bag_record rs_to_velodyne ${catkin_LIBRARIES})
+target_link_libraries(bag_record ${catkin_LIBRARIES} ${PCL_LIBRARIES})
 #############
 ## Install ##
 #############
@@ -141,7 +141,7 @@ target_link_libraries(bag_record rs_to_velodyne ${catkin_LIBRARIES})
  )
 
  install(TARGETS 
-    read_txt rs_to_velodyne
+    read_txt
     ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
     LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
     RUNTIME DESTINATION ${CATKIN_GLOBAL_BIN_DESTINATION}
