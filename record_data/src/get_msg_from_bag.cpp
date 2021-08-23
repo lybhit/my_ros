@@ -15,11 +15,11 @@ void runFromBag(const std::string &in_bag_fn, const std::string &out_bag_fn)
   bag.open(in_bag_fn, rosbag::bagmode::Read);
 
   rosbag::Bag bag_out;
-  bag.open("out_bag_fn", rosbag::bagmode::Write);
+  bag_out.open(out_bag_fn, rosbag::bagmode::Write);
 
   std::vector<std::string> topics;
   topics.push_back(std::string("imu_data"));
-  std::string scan_topic_name = "rslidar_points"; // TODO determine what topic this actually is from ROS
+  std::string scan_topic_name = "/rslidar_points"; // TODO determine what topic this actually is from ROS
   topics.push_back(scan_topic_name);
   rosbag::View view(bag, rosbag::TopicQuery(topics));
 
@@ -66,6 +66,9 @@ int main(int argc, char **argv) {
    
    std::string bag_in(argv[1]);
    std::string bag_out(argv[2]);
+   std::cout << argv[1] << std::endl;
+   std::cout << argv[2] << std::endl;
+
 
    runFromBag(bag_in, bag_out);
 
