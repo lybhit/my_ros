@@ -18,7 +18,7 @@ void runFromBag(const std::string &in_bag_fn, const std::string &out_bag_fn)
   bag_out.open(out_bag_fn, rosbag::bagmode::Write);
 
   std::vector<std::string> topics;
-  topics.push_back(std::string("imu_data"));
+  topics.push_back(std::string("/imu_data_fix"));
   std::string scan_topic_name = "/rslidar_points"; // TODO determine what topic this actually is from ROS
   topics.push_back(scan_topic_name);
   rosbag::View view(bag, rosbag::TopicQuery(topics));
@@ -38,20 +38,30 @@ void runFromBag(const std::string &in_bag_fn, const std::string &out_bag_fn)
     // Process any ros messages or callbacks at this point
     // ros::getGlobalCallbackQueue()->callAvailable(ros::WallDuration());
 
-    sensor_msgs::PointCloud2::ConstPtr point_cloud_msg = msg.instantiate<sensor_msgs::PointCloud2>();
-    if (point_cloud_msg!= NULL)
+    if(msg.getTopic() == "/rslidar_points")
     {
-      Rs2Velodyne<RsPointXYZIRT, VelodynePointXYZIRT> r2v;
-      r2v.setOutputType("XYZIRT");
-
-      sensor_msgs::PointCloud2::ConstPtr mm = r2v.rsHandler_XYZIRT(*point_cloud_msg);
-      if(mm != nullptr)
+      sensor_msgs::PointCloud2::ConstPtr point_cloud_msg = msg.instantiate<sensor_msgs::PointCloud2>();
+      if (point_cloud_msg!= NULL)
       {
-        bag_out.write("velodyne_points", point_cloud_msg->header.stamp, mm);
+        Rs2Velodyne<RsPointXYZIRT, VelodynePointXYZIRT> r2v;
+        r2v.setOutputType("XYZIRT");
+
+        sensor_msgs::PointCloud2::ConstPtr mm = r2v.rsHandler_XYZIRT(*point_cloud_msg);
+        if(mm != nullptr)
+        {
+          bag_out.write("velodyne_points", point_cloud_msg->header.stamp, mm);
+        }
+      }
+    }else if(msg.getTopic() == "/imu_data_fix"){
+      // ROS_INFO("topic is imu_data_fix");
+      sensor_msgs::Imu::ConstPtr imu_msg = msg.instantiate<sensor_msgs::Imu>();
+      if(imu_msg != nullptr)
+      {
+        bag_out.write("imu_data", msg.getTime(), imu_msg);
       }
     }
 
-    ROS_WARN_STREAM("Unsupported message type" << msg.getTopic());
+    // ROS_WARN_STREAM("Unsupported message type" << msg.getTopic());
   }
 
   bag.close();
@@ -68,7 +78,6 @@ int main(int argc, char **argv) {
    std::string bag_out(argv[2]);
    std::cout << argv[1] << std::endl;
    std::cout << argv[2] << std::endl;
-
 
    runFromBag(bag_in, bag_out);
 
