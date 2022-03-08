@@ -40,6 +40,7 @@ endif()
 
 ## System dependencies are found with CMake's conventions
 find_package(Boost REQUIRED)
+find_package(PCL REQUIRED)
 
 add_library(read_txt 
             src/read_txt.cpp
@@ -88,10 +89,15 @@ catkin_package(
 ## Your package locations should be listed before other locations
 include_directories(
   include
+  convert
+  ${PCL_INCLUDE_DIRS}
   ${catkin_INCLUDE_DIRS}
   ${EIGEN3_INCLUDE_DIRS}
   ${Boost_INCLUDE_DIRS}
 )
+
+# add_library(rs_to_velodyne convert/rs_to_velodyne.cpp)
+# target_link_libraries(rs_to_velodyne ${PCL_LIBRARIES})
 
 add_executable(odom_tf_node src/odom_tf_node.cpp)
 target_link_libraries(odom_tf_node ${catkin_LIBRARIES})
@@ -115,15 +121,17 @@ target_link_libraries(read_pose_cov_node ${catkin_LIBRARIES})
 add_executable(auto_record_cov_belief_node src/auto_record_cov_belief.cpp)
 target_link_libraries(auto_record_cov_belief_node ${catkin_LIBRARIES})
 
-add_executable(pub_pos_from_txt_node src/pub_pos_from_txt.cpp)
-target_link_libraries(pub_pos_from_txt_node 
-                      read_txt
-                      ${catkin_LIBRARIES}
-)
+# add_executable(pub_pos_from_txt_node src/pub_pos_from_txt.cpp)
+# target_link_libraries(pub_pos_from_txt_node 
+#                       read_txt
+#                       ${catkin_LIBRARIES}
+# )
 
 add_executable(visual_marker_node src/visual_marker.cpp)
 target_link_libraries(visual_marker_node ${catkin_LIBRARIES})
 
+add_executable(bag_record src/get_msg_from_bag.cpp)
+target_link_libraries(bag_record ${catkin_LIBRARIES} ${PCL_LIBRARIES})
 #############
 ## Install ##
 #############
@@ -146,7 +154,7 @@ target_link_libraries(visual_marker_node ${catkin_LIBRARIES})
                  # scan_test_node 
                  scan_data_analyze_node
                  auto_record_cov_belief_node
-                 pub_pos_from_txt_node
+                #  pub_pos_from_txt_node
                  visual_marker_node
    RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
  )

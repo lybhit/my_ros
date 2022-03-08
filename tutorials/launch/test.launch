@@ -1,0 +1,7 @@
+<launch>
+
+  launch-prefix="gdb -ex run --args"
+  <node pkg="tutorials" name="talker" type="talker" output="screen" launch-prefix="xterm -e gdb -ex run --args"/>
+
+  <!-- <node pkg="tutorials" name="listener" type="listener" output="screen"/> -->
+</launch>

@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.8.3)
-project(tf_tutorial)
+project(tutorials)
 
 ## Compile as C++11, supported in ROS Kinetic and newer
 add_compile_options(-std=c++11)
@@ -11,6 +11,7 @@ find_package(catkin REQUIRED COMPONENTS
   dynamic_reconfigure
   geometry_msgs
   message_runtime
+  #nav_core
   nav_msgs
   sensor_msgs
   pcl_ros
@@ -40,18 +41,14 @@ endif()
 ## System dependencies are found with CMake's conventions
 find_package(Boost REQUIRED)
 
-
 ## Uncomment this if the package has a setup.py. This macro ensures
 ## modules and global scripts declared therein get installed
 ## See http://ros.org/doc/api/catkin/html/user_guide/setup_dot_py.html
 # catkin_python_setup()
 
-
-
 ################################################
 ## Declare ROS dynamic reconfigure parameters ##
 ################################################
-
 
 ## Generate dynamic reconfigure parameters in the 'cfg' folder
 # generate_dynamic_reconfigure_options(
@@ -69,8 +66,7 @@ find_package(Boost REQUIRED)
 ## CATKIN_DEPENDS: catkin_packages dependent projects also need
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
-  INCLUDE_DIRS include
-  LIBRARIES read_txt 
+    # INCLUDE_DIRS include
   CATKIN_DEPENDS dynamic_reconfigure geometry_msgs nav_core nav_msgs pcl_ros pluginlib roscpp rospy std_msgs dg_msgs tf 
   #DEPENDS system_lib
 )
@@ -82,14 +78,17 @@ catkin_package(
 ## Specify additional locations of header files
 ## Your package locations should be listed before other locations
 include_directories(
-  include
+    # include
   ${catkin_INCLUDE_DIRS}
   ${EIGEN3_INCLUDE_DIRS}
   ${Boost_INCLUDE_DIRS}
 )
 
-add_executable(tf_2_eigen src/tf_2_eigen.cpp)
-target_link_libraries(tf_2_eigen ${catkin_LIBRARIES})
+add_executable(talker src/talker.cpp)
+target_link_libraries(talker ${catkin_LIBRARIES})
+
+add_executable(listener src/listener.cpp)
+target_link_libraries(listener ${catkin_LIBRARIES})
 
 #############
 ## Install ##
@@ -98,28 +97,36 @@ target_link_libraries(tf_2_eigen ${catkin_LIBRARIES})
 #   scripts/T_test_with_id_simplify.py
 #   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 # )
-
+#
 # install(TARGETS 
-	 # read_txt
-    # ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
-    # LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
-    # RUNTIME DESTINATION ${CATKIN_GLOBAL_BIN_DESTINATION}
-    # )
-  
+#    read_txt
+#    ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+#    LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+#    RUNTIME DESTINATION ${CATKIN_GLOBAL_BIN_DESTINATION}
+# )
+#  
 # install(TARGETS odom_tf_node 
+#                 tf_listen_node 
+#                 auto_get_goal_node 
+#                 #read_laser_node 
+#                 # scan_test_node 
+#                 scan_data_analyze_node
+#                 auto_record_cov_belief_node
+#                 pub_pos_from_txt_node
+#                 visual_marker_node
 #   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 # )
-
-
-
- install(DIRECTORY include/${PROJECT_NAME}/
-   DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION}
-   FILES_MATCHING PATTERN "*.h"
-   PATTERN ".svn" EXCLUDE
- )
-
- install(DIRECTORY launch/
-    DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}/launch
-)
+#
+#
+#
+# install(DIRECTORY include/${PROJECT_NAME}/
+#   DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION}
+#   FILES_MATCHING PATTERN "*.h"
+#   PATTERN ".svn" EXCLUDE
+# )
+#
+# install(DIRECTORY launch/
+#    DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}/launch
+#)
 
 
